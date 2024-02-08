@@ -3,17 +3,14 @@ import 'package:flutter/material.dart';
 import '../../main.dart';
 
 class SearchProvider extends ChangeNotifier {
-  String? loc;
+  String? mov;
 
   Future<void> fetchDataFromPrefs() async {
-    String? storedLoc = prefs.getString('City');
-    if (storedLoc != null) {
-      loc = storedLoc;
-      print(loc);
+    String? storedmovie = prefs.getString('movie');
+    if (storedmovie != null) {
+      mov = storedmovie;
+      print(mov);
       notifyListeners(); // Notify listeners about the change
-    } else {
-      loc = "Rajkot";
-      notifyListeners();
     }
   }
 }

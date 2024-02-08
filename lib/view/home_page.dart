@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart'as http;
+import 'package:http/http.dart' as http;
 import 'package:movie_details/controller/api_helper.dart';
 import 'package:provider/provider.dart';
 
@@ -30,87 +30,107 @@ class _Home_ScreenState extends State<Home_Screen> {
     // var gp = Provider.of<GeetaProvider>(context, listen: false);
     var sp = Provider.of<SearchProvider>(context);
     return Scaffold(
-        backgroundColor: Theme.of(context).brightness == Brightness.light
-            ? Colors.white
-            : Colors.grey[400],
         appBar: AppBar(
-
-          backgroundColor: Theme.of(context).brightness == Brightness.light
-              ? Color(0xFFCCAB8C)
-              : Color(0xFF946D4A),
+          backgroundColor: Colors.pink[100],
           title: Text(
             "Movie",
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
-
         ),
-        body: Column(
-          children: [
-            FutureBuilder(
-              future: ApiHelper().getApiData(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text("Error : ${snapshot.error}"),
-                  );
-                } else if (snapshot.hasData) {
-                  Movie? data = snapshot.data;
-                  return Column(
-                    children: [
-                      Container(
-                        margin:EdgeInsets.only(top: 95),
-                        height: 50,
-                        padding: EdgeInsets.symmetric(horizontal: 2.0),
-                        child: TextFormField(
-                          onChanged: (value) async {
-                            String baseUrl =
-                                "https://api.weatherapi.com/v1/forecast.json?key=e09f03988e1048d2966132426232205&q=";
-                            // String endUrl = "$value&aqi=no";
-                            // String api = baseUrl + endUrl;
-                            http.Response res = await http.get(Uri.parse(baseUrl));
-                            if (res.statusCode == 200) {
-                              sp.loc = value;
-                              prefs.setString("City", value);
-                            } else {
-                              print("NO DATA FOUND");
-                            }
+        body: SingleChildScrollView(
+          child: FutureBuilder(
+            future: ApiHelper().getApiData(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text("Error : ${snapshot.error}"),
+                );
+              } else if (snapshot.hasData) {
+                Movie? data = snapshot.data;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 9),
+                      height: 50,
+                      padding: EdgeInsets.symmetric(horizontal: 2.0),
+                      child: TextFormField(
+                        onChanged: (value) async {
+                          String baseUrl =
+                              "https://www.omdbapi.com/?t={$value}apikey={3069b767}";
+                          http.Response res =
+                              await http.get(Uri.parse(baseUrl));
+                          if (res.statusCode == 200) {
+                            sp.mov = value;
+                            prefs.setString("movie", value);
+                          } else {
+                            print("NO DATA FOUND");
+                          }
+                        },
+                        onSaved: (value) async {},
+                        decoration: InputDecoration(
+                          labelText: 'Enter Movie Name',
+                          border: OutlineInputBorder(),
+                        ),
+                        cursorColor: Colors.white,
+                        keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.words,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return DetailsPage(
+                              title: data!.title,
+                              director: "${data.director}",
+                              year: data.year,
+                              image:data.poster,
+                              language: data.language,
+                              production: data.production,
+                              imdbvotes: data.imdbVotes,
+
+                              // rating: double.parse("${data.ratings![1].source}"),
+                            );
                           },
-                          onSaved: (value) async {},
-                          decoration: InputDecoration(
-                            labelText: 'Enter City',
-                            border: OutlineInputBorder(),
-                            icon: Icon(Icons.location_city),
-                          ),
-                          cursorColor: Colors.white,
-                          keyboardType: TextInputType.text,
-                          textCapitalization: TextCapitalization.words,
+                        ));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(left: 10),
+                        clipBehavior: Clip.antiAlias,
+                        height: 300,
+                        width: 200,
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: Image.network(
+                          "${data?.poster}",
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      Text("${data!.title}\n"),
-                      Text("${data!.country}\n"),
-                      Text("${data!.actors}\n"),
-                      Text("${data!.awards}\n"),
-                      Text("${data!. boxOffice}\n"),
-                      Text("${data!.dvd}\n"),
-                      Text("${data!.poster}\n"),
-                      Text("${data!.ratings}\n"),
-                      Text("${data!.website}\n"),
-                      Text("${data!.year}\n"),
-                      Text("${data!.writer}\n"),
-                      Text("${data!.ratings![2].value}\n"),
-                      Text("${data!.ratings![0].source}\n"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12),
+                      child: Text(
+                        "${data!.title}\n",
+                        style: TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.bold),
+                      ),
+                    ),
 
-                    ],
-                  );
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
-            ),
-          ],
+                  ],
+                );
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
         ));
   }
 }

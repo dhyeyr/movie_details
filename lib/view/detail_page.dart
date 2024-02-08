@@ -1,135 +1,101 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class ShlokDetail extends StatefulWidget {
+class DetailsPage extends StatefulWidget {
+  String? title;
+  String? image;
 
+  // String? rating;
+  String? director;
+  String? year;
+  String? language;
+  String? production;
+  String? imdbvotes;
 
-  ShlokDetail(
-      {Key? key,})
-      : super(key: key);
+  DetailsPage({
+    Key? key,
+    required this.title,
+    // required this.rating,
+    required this.image,
+    required this.director,
+    required this.year,
+    required this.language,
+    required this.production,
+    required this.imdbvotes,
+  }) : super(key: key);
 
   @override
-  State<ShlokDetail> createState() => _ShlokDetailState();
+  State<DetailsPage> createState() => _DetailsPageState();
 }
 
-class _ShlokDetailState extends State<ShlokDetail> {
+class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).brightness == Brightness.light
-          ? Colors.white
-          : Colors.grey[400],
       appBar: AppBar(
-        title: Text("Verses Details"),
+        title: Text("Details Page"),
         centerTitle: true,
-        backgroundColor:  Theme.of(context).brightness == Brightness.light
-            ? Color(0xFFCCAB8C)
-            : Color(0xFF946D4A),
       ),
-      // body: SingleChildScrollView(
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       SizedBox(height: 10,),
-      //       Container(
-      //           margin: EdgeInsets.only(left: 10,right: 10),
-      //           height: 50,
-      //           width: double.infinity,
-      //           color: Theme.of(context).brightness == Brightness.light
-      //               ? Color(0xFFCCAB8C)
-      //               : Color(0xFF946D4A),
-      //           child: Padding(
-      //             padding: const EdgeInsets.only(top: 15,left: 10),
-      //             child: Text("SANSKRIT :", style: TextStyle(fontSize: 18)),
-      //           )),
-      //       Container(
-      //           width: MediaQuery.sizeOf(context).width * 10,
-      //           height: MediaQuery.sizeOf(context).height * 0.15,
-      //           color: Theme.of(context).brightness == Brightness.light
-      //               ? Color(0xFFCCAB8C)
-      //               : Color(0xFF946D4A),
-      //           margin: EdgeInsetsDirectional.all(8),
-      //           padding: EdgeInsetsDirectional.all(8),
-      //           child: Center(
-      //               child: Text(
-      //                 widget.san ?? "",
-      //                 style: TextStyle(fontSize: 18),
-      //               ))),
-      //       Container(
-      //           margin: EdgeInsets.only(left: 10,right: 10),
-      //           height: 50,
-      //           width: double.infinity,
-      //           color: Theme.of(context).brightness == Brightness.light
-      //               ? Color(0xFFCCAB8C)
-      //               : Color(0xFF946D4A),
-      //           child: Padding(
-      //             padding: const EdgeInsets.only(top: 15,left: 10),
-      //             child: Text("ENGLISH :", style: TextStyle(fontSize: 18)),
-      //           )),
-      //       Container(
-      //           width: MediaQuery.sizeOf(context).width * 10,
-      //           height: MediaQuery.sizeOf(context).height * 0.15,
-      //           color: Theme.of(context).brightness == Brightness.light
-      //               ? Color(0xFFCCAB8C)
-      //               : Color(0xFF946D4A),
-      //           margin: EdgeInsetsDirectional.all(8),
-      //           padding: EdgeInsetsDirectional.all(8),
-      //           child: Center(
-      //               child: Text(
-      //                 widget.eng ?? "",
-      //                 style: TextStyle(fontSize: 18),
-      //               ))), Container(
-      //           margin: EdgeInsets.only(left: 10,right: 10),
-      //           height: 50,
-      //           width: double.infinity,
-      //           color: Theme.of(context).brightness == Brightness.light
-      //               ? Color(0xFFCCAB8C)
-      //               : Color(0xFF946D4A),
-      //           child: Padding(
-      //             padding: const EdgeInsets.only(top: 15,left: 10),
-      //             child: Text("HINDI :", style: TextStyle(fontSize: 18)),
-      //           )),
-      //       Container(
-      //           width: MediaQuery.sizeOf(context).width * 10,
-      //           height: MediaQuery.sizeOf(context).height * 0.15,
-      //           color: Theme.of(context).brightness == Brightness.light
-      //               ? Color(0xFFCCAB8C)
-      //               : Color(0xFF946D4A),
-      //           margin: EdgeInsetsDirectional.all(8),
-      //           padding: EdgeInsetsDirectional.all(8),
-      //           child: Center(
-      //               child: Text(
-      //                 widget.hindi ?? "",
-      //                 style: TextStyle(fontSize: 18),
-      //               ))), Container(
-      //           margin: EdgeInsets.only(left: 10,right: 10),
-      //           height: 50,
-      //           width: double.infinity,
-      //           color: Theme.of(context).brightness == Brightness.light
-      //               ? Color(0xFFCCAB8C)
-      //               : Color(0xFF946D4A),
-      //           child: Padding(
-      //             padding: const EdgeInsets.only(top: 15,left: 10),
-      //             child: Text("GUJARATI :", style: TextStyle(fontSize: 18)),
-      //           )),
-      //       Container(
-      //           width: MediaQuery.sizeOf(context).width * 10,
-      //           height: MediaQuery.sizeOf(context).height * 0.15,
-      //           color: Theme.of(context).brightness == Brightness.light
-      //               ? Color(0xFFCCAB8C)
-      //               : Color(0xFF946D4A),
-      //           margin: EdgeInsetsDirectional.all(8),
-      //           padding: EdgeInsetsDirectional.all(8),
-      //           child: Center(
-      //               child: Text(
-      //                 widget.guj ?? "",
-      //                 style: TextStyle(fontSize: 18),
-      //               ))),
-      //
-      //     ],
-      //   ),
-      // ),
+      body: Column(
+        children: [
+          Center(
+            child: Image.network(
+              "${widget.image}",
+              width: 307,
+              height: 390,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 20),
+            height: MediaQuery.sizeOf(context).height * 0.37,
+            width: MediaQuery.sizeOf(context).width * 0.95,
+            decoration: BoxDecoration(
+                color: Colors.black12, borderRadius: BorderRadius.circular(10)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "${widget.title}",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+                Text(
+                  "${widget.production}",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+                Text(
+                  "${widget.director}",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "Description:-",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                ),
+                SizedBox(height: 7),
+                Text(
+                  widget.language ?? "",
+                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.year ?? "",
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

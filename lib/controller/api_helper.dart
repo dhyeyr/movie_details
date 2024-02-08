@@ -17,9 +17,7 @@ class ApiHelper {
   Future<Movie?> getApiData() async {
     String baseUrl =
         "https://www.omdbapi.com/?i=tt3896198&apikey=3069b767";
-    // String endUrl = "$location&aqi=no";
-    // String api = baseUrl + endUrl;
-    // var future = await http.get(Uri.parse(baseUrl));
+
 
     http.Response res = await http.get(Uri.parse(baseUrl));
     if (res.statusCode == 200) {

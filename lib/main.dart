@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movie_details/view/home_page.dart';
-import 'package:movie_details/view/new.dart';
 import 'package:movie_details/view/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
