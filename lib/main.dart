@@ -1,43 +1,54 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
+import 'package:movie_details/view/detail_page.dart';
 import 'package:movie_details/view/home_page.dart';
+import 'package:movie_details/view/liked_page.dart';
 import 'package:movie_details/view/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'controller/movie_provider.dart';
 import 'controller/search_provider.dart';
-late SharedPreferences prefs;
 
+late SharedPreferences preferences;
 
-
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  prefs = await SharedPreferences.getInstance();
-  runApp(const MyApp());
+  preferences = await SharedPreferences.getInstance();
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (context) => MovieProvider(),
+        ),
+        ChangeNotifierProvider(
           create: (context) => SearchProvider(),
         ),
       ],
-      child: MaterialApp(
+      builder: (context, child) => MaterialApp(
+        title: "Movie Bazaar",
         debugShowCheckedModeBanner: false,
-            routes: {
-              'HomePage': (context) =>  Home_Screen(),
-              '/': (context) => const SplashScreen(),
-            },
-            theme: ThemeData.light(),
-            darkTheme: ThemeData.dark(),
-            // themeMode: themeprovider.thememode,
-          ),
+        initialRoute: "/",
+        routes: {
+          "/": (context) => Splash(),
+          "Home": (context) => Home_screen(),
+          "ViewMore":(context) => ViewMore(),
+          "LikePage": (context) => LikePage(),
+        },
+      ),
     );
-
   }
 }
-
