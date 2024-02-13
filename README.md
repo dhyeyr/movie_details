@@ -23,5 +23,5 @@
 # Screen Shorts (ss):
 ![Untitled design](https://github.com/dhyeyr/movie_details/assets/143472343/eaecf844-b42b-4c59-9da8-81e1d1da1219)
 # Screen Recoreding :
-https://drive.google.com/drive/my-drive
+https://drive.google.com/file/d/1DxpKzOyj3n-9Ax_y3W4gs4v2CiDPwsLV/view?t=9
 
